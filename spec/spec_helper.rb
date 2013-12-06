@@ -1,7 +1,5 @@
 ENV["RAILS_ENV"] ||= 'test'
 
-require 'pry-debugger'
-
 require 'fileutils'
 puts 'Creating dummy app from template'
 FileUtils.cp_r(File.expand_path('../../spec/template_dummy', __FILE__),
@@ -10,6 +8,7 @@ FileUtils.cp_r(File.expand_path('../../spec/template_dummy', __FILE__),
 require File.expand_path("../../spec/dummy/config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+require 'pry-debugger'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -47,7 +46,7 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  config.after(:all) do
+  config.after(:suite) do
     puts 'Deleting dummy app'
     FileUtils.rm_rf(File.expand_path('../../spec/dummy', __FILE__))
   end
