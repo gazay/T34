@@ -1,5 +1,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 
+require 'pry-debugger'
+
 require 'fileutils'
 puts 'Creating dummy app from template'
 FileUtils.cp_r(File.expand_path('../../spec/template_dummy', __FILE__),

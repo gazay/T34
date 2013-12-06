@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.add_dependency "unparser"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "pry-plus"
 end

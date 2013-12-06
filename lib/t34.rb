@@ -4,4 +4,9 @@ module T34
     true
   end
 
+  def self.scopes(file)
+    binding.pry
+    nil
+  end
+
 end
