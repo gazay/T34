@@ -164,6 +164,7 @@ PLATFORMS
 
 DEPENDENCIES
   pry-plus
+  pry-rescue
   rspec-rails
   sqlite3
   t34!

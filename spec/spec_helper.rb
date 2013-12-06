@@ -8,7 +8,9 @@ FileUtils.cp_r(File.expand_path('../../spec/template_dummy', __FILE__),
 require File.expand_path("../../spec/dummy/config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+
 require 'pry-debugger'
+require 'pry-rescue/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
