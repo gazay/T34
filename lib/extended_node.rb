@@ -60,9 +60,6 @@ module ExtendedNode
 
   def class?
     type == :class
-    #type == :const && children.size == 3 &&
-    #  children[1].is_a?(Symbol) &&              # class name
-    #  (children[0].nil? || children[0].class?)  # inheritance
   end
 
   def args?
