@@ -20,7 +20,7 @@ end"
   }
 
   it 'finds methods' do
-    expect(rewriter.methods(:test_method).map(&:class).compact).to be_kind_of Array
+    expect(rewriter.methods(:test_method)).to be_kind_of Array
   end
 
   it 'finds method nodes' do
