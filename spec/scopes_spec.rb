@@ -5,13 +5,13 @@ describe 'scopes transformation' do
     File.open(File.expand_path("../dummy/app/models/post.rb", __FILE__)) { |f| f.read }
   }
 
-  it 'raises if not a model given' do
+  xit 'raises if not a model given' do
     expect {
       T34.scopes('2 + 2')
     }.to raise_error
   end
 
-  it 'finds scopes' do
+  xit 'finds scopes' do
     res = T34.scopes(test_file)
     expect(res).to be_kind_of Array
     expect(res.map(&:class).compact).to eq [Parser::Source::Range]

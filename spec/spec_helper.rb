@@ -1,7 +1,6 @@
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'fileutils'
-puts 'Creating dummy app from template'
 FileUtils.cp_r(File.expand_path('../../spec/template_dummy', __FILE__),
                File.expand_path('../../spec/dummy', __FILE__))
 
@@ -49,7 +48,6 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.after(:suite) do
-    puts 'Deleting dummy app'
     FileUtils.rm_rf(File.expand_path('../../spec/dummy', __FILE__))
   end
 end
