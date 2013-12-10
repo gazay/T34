@@ -7,8 +7,6 @@ module Parser
       end
 
       def method_missing(method, *args, &block)
-        require 'byebug'
-        byebug
         if method.to_s =~ /=/
           case method
           when :name=
