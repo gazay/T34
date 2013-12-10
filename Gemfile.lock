@@ -41,9 +41,14 @@ GEM
     ast (1.1.0)
     atomic (1.1.14)
     builder (3.1.4)
+    byebug (2.4.1)
+      columnize (~> 0.3.6)
+      debugger-linecache (~> 1.2.0)
+    columnize (0.3.6)
     concord (0.1.4)
       adamantium (~> 0.1)
       equalizer (~> 0.0.7)
+    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     equalizer (0.0.8)
     erubis (2.7.0)
@@ -118,6 +123,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   rspec-rails
   sqlite3
   t34!

@@ -21,7 +21,9 @@ module Parser
       end
 
       def pop
-        self.children = children[0...-1] # ZOMG
+        result = children[-1]
+        self.children = children[0...-1]
+        result
       end
 
       def method?(*names)

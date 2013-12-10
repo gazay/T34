@@ -40,6 +40,7 @@ end"
         method_node.args.pop
       end
     end
+
     expect(rewriter.target).to eq target
   end
 end
