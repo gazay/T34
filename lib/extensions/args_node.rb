@@ -31,7 +31,13 @@ module Parser
       end
 
       def each
-        children.each { |it| yield it }
+        children.each { |it| yield Parser::AST::ArgNode.new(it) }
+      end
+
+      def map!
+        result = self.map { |it| yield it }.
+          map { |it| it.to_ast }
+        self.children = result
       end
 
     end

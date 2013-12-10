@@ -2,6 +2,7 @@ require 'parser/ast/node'
 
 require_relative 'extensions/proxy'
 require_relative 'extensions/args_node'
+require_relative 'extensions/arg_node'
 require_relative 'extensions/method_node'
 
 module Extensions
