@@ -29,7 +29,7 @@ end"
 
   it 'manipulates methods' do
     res = rewriter.methods(:test_method) do |method_node|
-      method_node.args.pop
+      method_node.args = method_node.args[0...-1]
     end
     expect(res[0].args.size).to eq 1
   end
@@ -37,7 +37,7 @@ end"
   it 'generates code back' do
     rewriter.rewrite do
       methods(:test_method) do |method_node|
-        method_node.args.pop
+        method_node.args = method_node.args[0...-1]
       end
     end
 

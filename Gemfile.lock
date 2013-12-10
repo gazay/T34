@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     t34 (0.0.1)
+      differ
       parser
       rails (~> 4.0.1)
       unparser
@@ -50,6 +51,7 @@ GEM
       equalizer (~> 0.0.7)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
+    differ (0.1.2)
     equalizer (0.0.8)
     erubis (2.7.0)
     hike (1.2.3)

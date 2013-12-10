@@ -5,6 +5,9 @@ require_relative 'extensions/args_node'
 require_relative 'extensions/method_node'
 
 module Extensions
+
+  include Enumerable
+
   # sorry, no more .freeze
   def initialize(type, children=[], properties={})
     @type, @children = type.to_sym, children.to_a
@@ -34,6 +37,10 @@ module Extensions
     node.children
       .select { |child| child.is_a?(AST::Node) }
       .each { |child| traverse(child.typecast, &block) }
+  end
+
+  def each
+    children.each { |it| yield it }
   end
 end
 

@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 4.0.1"
   s.add_dependency "parser"
   s.add_dependency "unparser"
+  s.add_dependency "differ"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "byebug"
