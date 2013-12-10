@@ -40,6 +40,12 @@ module Parser
         self.children = result
       end
 
+      def select!
+        result = self.select { |it| yield it }.
+          map { |it| it.to_ast }
+        self.children = result
+      end
+
     end
   end
 end
