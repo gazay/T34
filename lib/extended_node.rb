@@ -33,10 +33,6 @@ module Parser
         @node.instance_eval { @children = a }
       end
 
-      def pop
-        self.children = children[0...-1] # ZOMG
-      end
-
       def method?(*names)
         false
       end
