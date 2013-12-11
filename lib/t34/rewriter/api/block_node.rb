@@ -4,6 +4,10 @@ module T34
 
       class BlockNode < Proxy
 
+        def typecast
+          self
+        end
+
         def type
           :block
         end
@@ -17,7 +21,7 @@ module T34
         end
 
         def children
-          @node.children[1..-1]
+          @node.children[1..-1].map(&:typecast)
         end
       end
 

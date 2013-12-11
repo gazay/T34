@@ -15,14 +15,11 @@ module T34
         def typecast
           T34::Rewriter::API::NODES.each do |node_class|
             if node_class.match_type?(self)
-              # hack :|
               if node_class == T34::Rewriter::API::BlockNode
                 block_node = node_class.new(self)
                 send_node = block_node.bound_method
                 send_node.block = block_node
                 return send_node
-              #elsif node_class == T34::Rewriter::API::SendNode && parent.try(:type) == :block
-              #  return
               else
                 return node_class.new(self)
               end
@@ -32,19 +29,15 @@ module T34
         end
 
         def traverse(node = self, parent = nil, &block)
-          puts node.inspect
           if parent
-            node.parent = parent rescue binding.pry
+            node.parent = parent
           end
-          if node.respond_to?(:typecast)
-            yield node.typecast
-          else
-            yield node
-          end
-          if node.respond_to?(:children) && node.children
-            node.children
-              .select { |child| child.is_a?(AST::Node) }
-              .each { |child| traverse(child.typecast, self, &block) }
+          casted = node.respond_to?(:typecast) ? node.typecast : node
+          yield casted
+          if casted.respond_to?(:children) && casted.children
+            casted.children
+              .select { |child| child.is_a?(AST::Node) || child.is_a?(T34::Rewriter::API::BlockNode) }
+              .each { |child| traverse(child, self, &block) }
           end
         end
 

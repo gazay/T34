@@ -16,10 +16,11 @@ end
   it 'finds blocks' do
     rewriter = T34::Rewriter.new(source_with_block)
     expect(rewriter.blocks).to be_kind_of Array
-    expect(rewriter.blocks).to eq nil #[T34::Rewriter::API::BlockNode]
+    expect(rewriter.blocks.map(&:class)).to eq [T34::Rewriter::API::BlockNode]
+    expect(rewriter.blocks[0].children.map(&:class)).to eq [T34::Rewriter::API::ArgsNode, T34::Rewriter::API::SendNode]
   end
 
-  xit 'finds no blocks' do
+  it 'finds no blocks' do
     rewriter = T34::Rewriter.new(source_without_block)
     expect(rewriter.blocks).to be_kind_of Array
     expect(rewriter.blocks).to eq []

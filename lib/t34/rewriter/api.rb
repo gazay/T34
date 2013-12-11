@@ -32,7 +32,7 @@ module T34
       def blocks
         blocks = []
         ast.traverse do |node|
-          if match?(:block, node)
+          if node.type == :block
             blocks << node
             yield node if block_given?
           end
