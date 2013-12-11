@@ -4,10 +4,19 @@ module T34
 
       class SendNode < Proxy
 
+<<<<<<< Updated upstream
         attr_accessor :type, :children
 
         def initialize(type, children = [], properties={})
           super
+=======
+        attr_accessor :block
+
+        def children
+          children = @node.children
+          children << block if block
+          children
+>>>>>>> Stashed changes
         end
 
         def method_name

@@ -2,6 +2,7 @@ module T34
   class Rewriter
     module API
       class Proxy
+
         def initialize(node)
           @node = node
         end

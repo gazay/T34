@@ -6,12 +6,13 @@ require_relative 'api/args_node'
 require_relative 'api/arg_node'
 require_relative 'api/method_node'
 require_relative 'api/send_node'
+require_relative 'api/block_node'
 
 module T34
   class Rewriter
     module API
 
-      NODES = [MethodNode, ArgsNode, ArgNode, SendNode]
+      NODES = [MethodNode, ArgsNode, ArgNode, SendNode, BlockNode]
 
       # TODO
       # it should enqueue traverse filter in a queue unless a block given
@@ -26,6 +27,17 @@ module T34
           end
         end
         methods
+      end
+
+      def blocks
+        blocks = []
+        ast.traverse do |node|
+          if match?(:block, node)
+            blocks << node
+            yield node if block_given?
+          end
+        end
+        blocks
       end
 
       def sends(*names)

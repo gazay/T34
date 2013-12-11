@@ -21,6 +21,14 @@ module T34
           @node.instance_eval { @children = a }
         end
 
+        def parent=(p)
+          @node.children.each { |c| c.parent = p }
+        end
+
+        def parent
+          @node.children[0].try(:parent)
+        end
+
         def pop
           result = children[-1]
           self.children = children[0...-1]
