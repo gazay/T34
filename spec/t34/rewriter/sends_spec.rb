@@ -6,7 +6,7 @@ describe T34::Rewriter::API::SendNode do
   }
 
   let(:target) {
-"scope :sample, -> { where(id: 1) }"
+"scope(:sample, lambda do\n  where({:id => 1})\nend)"
   }
 
   let(:target2) {
@@ -43,6 +43,16 @@ describe T34::Rewriter::API::SendNode do
       end
     end
     expect(res[0].arg_values[1].children[1]).to eq :new_name
+  end
+
+  it 'wraps inner sends with lambda' do
+    rewriter.rewrite do
+      sends(:scope) do |send_node|
+        where_node = send_node.sends(:where).first
+        send_node.replace where_node, where_node.wrap_with_lambda
+      end
+    end
+    expect(rewriter.target).to eq target
   end
 
 end
