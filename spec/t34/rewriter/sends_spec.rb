@@ -13,6 +13,10 @@ describe T34::Rewriter::API::SendNode do
 "new_name :sample, where(id: 1) "
   }
 
+  let(:target3) {
+"scope :sample, new_name(id: 1) "
+  }
+
   let(:rewriter) {
     T34::Rewriter.new source
   }
@@ -30,6 +34,15 @@ describe T34::Rewriter::API::SendNode do
       send_node.method_name = :new_name
     end
     expect(res[0].method_name).to eq :new_name
+  end
+
+  it 'manipulates sends values of send' do
+    res = rewriter.sends(:scope) do |send_node|
+      send_node.sends(:where) do |inner_send|
+        inner_send.method_name = :new_name
+      end
+    end
+    expect(res[0].arg_values[1].children[1]).to eq :new_name
   end
 
 end

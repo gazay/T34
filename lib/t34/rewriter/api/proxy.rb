@@ -18,6 +18,10 @@ module T34
           :proxy
         end
 
+        def to_ast
+          @node
+        end
+
         def match_type?(node)
           false
         end

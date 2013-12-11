@@ -18,10 +18,6 @@ module T34
           end
         end
 
-        def to_ast
-          @node
-        end
-
         def type
           :arg
         end

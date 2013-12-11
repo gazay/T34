@@ -6,6 +6,8 @@ module T34
 
         attr_reader :block
 
+        include T34::Rewriter::API
+
         def initialize(node)
           if node.type == :block
             @node = node.children[0]
@@ -38,7 +40,7 @@ module T34
             when :method_name=
               @node.instance_eval \
                 { @children = [children[0], args.first] + children[2..-1] }
-            when :args=
+            when :arg_values=
               @node.instance_eval \
               {
                 @children = children[0..1] + args.map do |it|
@@ -51,8 +53,20 @@ module T34
           end
         end
 
+        def ast
+          @node
+        end
+
         def type
           :send
+        end
+
+        def to_ast
+          if with_block?
+            @block.instance_eval { @children = [@node] + @block.children[1..-1] }
+          else
+            @node
+          end
         end
 
         def self.match_type?(node)
