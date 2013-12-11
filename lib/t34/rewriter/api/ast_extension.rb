@@ -21,8 +21,12 @@ module T34
         end
 
         def traverse(node = self, &block)
-          yield node
-          if node.respond_to?(:children)
+          if node.respond_to?(:typecast)
+            yield node.typecast
+          else
+            yield node
+          end
+          if node.respond_to?(:children) && node.children
             node.children
               .select { |child| child.is_a?(AST::Node) }
               .each { |child| traverse(child.typecast, &block) }

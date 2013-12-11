@@ -20,7 +20,7 @@ module T34
       def methods(*names)
         methods = []
         ast.traverse do |node|
-          if method_match?(node, names)
+          if match?(:method, node, names)
             methods << node
             yield node if block_given?
           end
@@ -29,14 +29,26 @@ module T34
       end
 
       def sends(*names)
-
+        sends = []
+        ast.traverse do |node|
+          if match?(:send, node, names, :method_name)
+            sends << node
+            yield node if block_given?
+          end
+        end
+        sends
       end
 
       private
 
-      def method_match?(node, names = [])
-        node.type == :method &&
-          (names.empty? || names.include?(node.name))
+      def match?(type, node, names = [], name_method = :name)
+        result = node.type == type
+        if node.respond_to?(name_method)
+          result = result &&
+            (names.empty? || names.include?(node.send(name_method)))
+        end
+
+        result
       end
 
     end

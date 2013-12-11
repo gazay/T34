@@ -17,6 +17,11 @@ module T34
           children[0]
         end
 
+        def name=(new_name)
+          children[0]
+          instance_eval { @children = [new_name.to_sym] + children[1..-1] }
+        end
+
         def type
           :method
         end
