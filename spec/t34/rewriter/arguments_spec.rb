@@ -31,7 +31,7 @@ end"
   end
 
   it 'finds method nodes' do
-    expect(rewriter.methods(:test_method).map(&:class).compact).to eq [Parser::AST::MethodNode]
+    expect(rewriter.methods(:test_method).map(&:class).compact).to eq [T34::Rewriter::API::MethodNode]
   end
 
   it 'manipulates methods' do

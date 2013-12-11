@@ -1,5 +1,9 @@
+require_relative 'rewriter/api'
+
 module T34
   class Rewriter
+
+    include T34::Rewriter::API
 
     DIFF_KINDS = %w(line word char)
 
@@ -23,22 +27,6 @@ module T34
     def target
       @target = Unparser.unparse(@target_ast)
     end
-
-    # TODO
-    # it should enqueue traverse filter in a queue unless a block given
-    # and filter only if block_given? to allow
-    # methods(:meth).with(any_argument) # <- implementation of rspec expectation
-    def methods(*names)
-      methods = []
-      ast.traverse do |node|
-        if node.method?(*names)
-          methods << node
-          yield node if block_given?
-        end
-      end
-      methods
-    end
-
 
     def diff(kind = 'line')
       unless DIFF_KINDS.include? kind
