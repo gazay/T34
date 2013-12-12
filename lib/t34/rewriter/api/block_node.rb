@@ -8,8 +8,8 @@ module T34
 
         def children
           # change if block is emitter of send node
-          #@node.children[1..-1].map(&:typecast)
-          @node.children
+          #@node.children
+          @node.children[1..-1].map(&:typecast)
         end
 
         def children=(new_children)
@@ -37,12 +37,13 @@ module T34
         end
 
         # uncomment if block is emitter of send node
-        #def bound_method
-        #  T34::Rewriter::API::SendNode.new @node.children[0]
-        #end
-        #def typecast
-        #  self
-        #end
+        def bound_method
+          T34::Rewriter::API::SendNode.new @node.children[0]
+        end
+
+        def typecast
+          self
+        end
       end
 
     end

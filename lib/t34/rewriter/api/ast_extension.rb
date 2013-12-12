@@ -16,12 +16,12 @@ module T34
           T34::Rewriter::API::NODES.each do |node_class|
             if node_class.match_type?(self)
               # change if block is emitter of send
-              #if node_class == T34::Rewriter::API::BlockNode
-              #  block_node = node_class.new(self)
-              #  send_node = block_node.bound_method
-              #  send_node.block = block_node
-              #  return send_node
-              #end
+              if node_class == T34::Rewriter::API::BlockNode
+                block_node = node_class.new(self)
+                send_node = block_node.bound_method
+                send_node.block = block_node
+                return send_node
+              end
               return node_class.new(self)
             end
           end
@@ -36,9 +36,9 @@ module T34
           yield casted
           if casted.respond_to?(:children) && casted.children
             # change if block is emitter of send
-            # .select { |child| child.is_a?(AST::Node) || child.is_a?(T34::Rewriter::API::BlockNode) }
+            # .select { |child| child.is_a?(AST::Node) }
             casted.children
-              .select { |child| child.is_a?(AST::Node) }
+              .select { |child| child.is_a?(AST::Node) || child.is_a?(T34::Rewriter::API::BlockNode) }
               .each { |child| traverse(child, self, &block) }
           end
         end

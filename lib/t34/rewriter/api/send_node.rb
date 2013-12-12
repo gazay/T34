@@ -4,29 +4,29 @@ module T34
 
       class SendNode < Proxy
 
-        attr_reader :block
+        attr_accessor :block
 
         include T34::Rewriter::API
 
-        def initialize(node)
-          # comment out if change to block node as send emitter
-          if node.type == :block
-            @node = node.children[0]
-            @block = node
-          else
-            @node = node
-            @block = nil
-          end
-        end
+        # comment out if change to block node as send emitter
+        #def initialize(node)
+        #  if node.type == :block
+        #    @node = node.children[0]
+        #    @block = node
+        #  else
+        #    @node = node
+        #    @block = nil
+        #  end
+        #end
 
         def children
-          @node.children
           # uncomment if change to block node as send emitter
-          #if block
-          #  @node.children + [block]
-          #else
-          #  @node.children
-          #end
+          #@node.children
+          if block
+            @node.children + [block]
+          else
+            @node.children
+          end
         end
 
         def with_block?
@@ -77,8 +77,9 @@ module T34
         end
 
         def self.match_type?(node)
-          node.type == :send ||
-            (node.type == :block && node.children[0].type == :send)
+          node.type == :send
+          #node.type == :send ||
+          #  (node.type == :block && node.children[0].type == :send)
         end
       end
 
