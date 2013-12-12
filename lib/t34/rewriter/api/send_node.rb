@@ -4,6 +4,11 @@ module T34
 
       class SendNode < Proxy
 
+        # if it's a bound_method of block (@block is present)
+        # ALL operation ON AST should be passed to that block
+        # think about this object just as a proxy shim to improve hierarchy before
+        # the block containing actual parsed method name, caller, etc in block.children[0]
+        # and backreferenced as bound_method
         attr_accessor :block
 
         include T34::Rewriter::API
@@ -18,6 +23,20 @@ module T34
         #    @block = nil
         #  end
         #end
+
+        def args
+          _, _, args, _ = children # caller, name, args, block
+          ArgsNode.new(args)
+        end
+
+        def args=(new_args)
+          blocks = new_args.delete_if { |a| a.is_a? BlockNode }
+          raise 'cannot accept more than one block' if blocks.size > 1
+          self.block = blocks[0]
+          @node.children = new_args
+          args
+        end
+
 
         def children
           # uncomment if change to block node as send emitter
@@ -51,7 +70,7 @@ module T34
               @node.instance_eval \
               {
                 @children = children[0..1] + args.map do |it|
-                  it.respond_to?(:to_ast) ? it.to_ast : it
+                  it.respond_to?(:ast) ? it.ast : it
                 end
               }
             end
@@ -68,9 +87,10 @@ module T34
           :send
         end
 
-        def to_ast
+        def ast
           if with_block?
-            @block.instance_eval { @children = [@node] + @block.children[1..-1] }
+            #@block.instance_eval { @children = [@node] + @block.children[1..-1] }
+            @block.ast
           else
             @node
           end

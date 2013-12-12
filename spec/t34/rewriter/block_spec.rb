@@ -25,4 +25,12 @@ end
     expect(rewriter.blocks).to be_kind_of Array
     expect(rewriter.blocks).to eq []
   end
+
+  xit 'manipulates blocks' do
+    rewriter = T34::Rewriter.new(source_with_block)
+    rewriter.blocks do |block_node|
+      block_node.bound_method.args += block_node.body.methods
+    end
+    expect(rewriter.target).to eq target
+  end
 end

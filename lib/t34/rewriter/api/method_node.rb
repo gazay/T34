@@ -10,7 +10,7 @@ module T34
 
         def args=(new_args)
           args.children = \
-            new_args.map { |it| it.respond_to?(:to_ast) ? it.to_ast : it }
+            new_args.map { |it| it.respond_to?(:ast) ? it.ast : it }
         end
 
         def name

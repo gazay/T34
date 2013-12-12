@@ -45,13 +45,13 @@ module T34
 
         def map!
           result = self.map { |it| yield it }.
-            map { |it| it.to_ast }
+            map { |it| it.ast }
           self.children = result
         end
 
         def select!
           result = self.select { |it| yield it }.
-            map { |it| it.to_ast }
+            map { |it| it.ast }
           self.children = result
         end
 

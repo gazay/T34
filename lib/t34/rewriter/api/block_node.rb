@@ -16,20 +16,20 @@ module T34
           @node.instance_eval \
             {
               @children = new_children.
-                map { |it| it.respond_to?(:to_ast) ? it.to_ast : it }
+                map { |it| it.respond_to?(:ast) ? it.ast : it }
             }
-        end
-
-        def ast
-          @node
         end
 
         def type
           :block
         end
 
-        def to_ast
-          @node
+        def args
+          ArgsNode.new(@node.children[1])
+        end
+
+        def body
+          @node.children[2].typecast
         end
 
         def self.match_type?(node)
@@ -38,7 +38,7 @@ module T34
 
         # uncomment if block is emitter of send node
         def bound_method
-          T34::Rewriter::API::SendNode.new @node.children[0]
+          @bound_method ||= T34::Rewriter::API::SendNode.new @node.children[0]
         end
 
         def typecast
