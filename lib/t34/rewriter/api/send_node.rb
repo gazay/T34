@@ -9,6 +9,7 @@ module T34
         include T34::Rewriter::API
 
         def initialize(node)
+          # comment out if change to block node as send emitter
           if node.type == :block
             @node = node.children[0]
             @block = node
@@ -20,6 +21,12 @@ module T34
 
         def children
           @node.children
+          # uncomment if change to block node as send emitter
+          #if block
+          #  @node.children + [block]
+          #else
+          #  @node.children
+          #end
         end
 
         def with_block?
