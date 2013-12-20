@@ -48,4 +48,9 @@ RSpec.configure do |config|
   config.after(:suite) do
     FileUtils.rm_rf(File.expand_path('../../spec/dummy', __FILE__))
   end
+
+  config.treat_symbols_as_metadata_keys_with_true_values = true
+  config.filter_run focus: true
+  config.filter_run_excluding :broken => true
+  config.filter_run_excluding :skip => true
 end

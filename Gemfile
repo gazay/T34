@@ -12,3 +12,4 @@ gemspec
 
 # To use debugger
 gem 'rspec-rails'
+gem 'fuubar'
