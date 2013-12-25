@@ -9,6 +9,7 @@ module T34
         def initialize(type, children=[], properties={})
           # sorry, no more .freeze
           @type, @children = type.to_sym, children.to_a
+          binding.pry
           assign_properties(properties)
         end
 
